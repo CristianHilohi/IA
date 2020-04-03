@@ -1,7 +1,12 @@
+import random
+
 validation_source_samples = open("validation_source_samples.txt", encoding="utf-8").read()
 validation_source_labels = open("validation_source_labels.txt").read()
 validation_target_samples = open("validation_source_labels.txt", encoding="utf-8").read()
 validation_target_labels = open("validation_source_labels.txt").read()
+train_samples = open("train_labels.txt", encoding="utf-8").read()
+train_labels = open("train_labels.txt").read()
+sample_submission = open("sample_submission.txt").writable()
 
 def get_freq_dic(text):
     ap_dic = {}
@@ -70,13 +75,27 @@ def get_med_freq(text, labels, rdi):
 
     return ch_dic
 
-med_freq_source_0 = get_med_freq(validation_source_samples, validation_source_labels, "RO")
-med_freq_source_1 = get_med_freq(validation_source_samples, validation_source_labels, "MD")
+med_freq_source_ro = get_med_freq(validation_source_samples, validation_source_labels, "RO")
+med_freq_source_md = get_med_freq(validation_source_samples, validation_source_labels, "MD")
 
-med_freq_target_0 = get_med_freq(validation_target_samples, validation_target_labels, "RO")
-med_freq_target_1 = get_med_freq(validation_target_samples, validation_target_labels, "MD")
+med_freq_target_ro = get_med_freq(validation_target_samples, validation_target_labels, "RO")
+med_freq_target_md = get_med_freq(validation_target_samples, validation_target_labels, "MD")
+
+med_freq_train_samples_ro = get_med_freq(train_samples, train_labels, "RO")
+med_freq_train_samples_md = get_med_freq(train_samples, train_labels, "MD")
+
+def compare_freq(ro_freq, md_freq, text):
+    text_fr = get_freq_dic(text)
+
+    # parcurg dictionarul de frecvente al textului test si caut frecventa fiecarui caracter in celelalte 2 => 5 cazuri:
+    # 1: nu gasesc caracterul => random 1 sau 0
+    # 2: gasesc doar in ro => 1
+    # 3: gasesc doar in md => 2
+    # 4: gasesc in ambele, valoare mai aproape de ro => 1
+    # 5: gasesc in ambele, valoare mai aproape de ro => 1
 
 
 print("\n-------------------------\n")
+print( random.choice([1,0]) )
 
 #chars_dic = get_chars_dic(text)
